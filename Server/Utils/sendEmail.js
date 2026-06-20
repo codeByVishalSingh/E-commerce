@@ -1,26 +1,29 @@
 const nodemailer = require("nodemailer");
 
-const sendEmail = async (to,subject,text) =>{
+const sendEmail = async (options) => { // options object pass karna zyada clean hai
     try {
         const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com', // Service ki jagah host use karein
-    port: 587,
-    secure: false, // true for port 465, false for other ports
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.PASS_USER, // Yahan 16-character ka App Password hi hona chahiye
-    }
-});
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false, 
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.PASS_USER,
+            }
+        });
+
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to,
-            subject,
-            text
-        }
-        await transporter.sendMail(mailOptions)
+            from: `"E-Commerce" <${process.env.EMAIL_USER}>`, // Explicitly define from
+            to: options.email,
+            subject: options.subject,
+            html: options.message // 'text' ki jagah 'html' use karein
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully!");
     } catch (error) {
-        console.log('error sending email',error);
-        
+        console.error('Error sending email:', error);
     }
 };
- module.exports = sendEmail;
+
+module.exports = sendEmail;
