@@ -1,21 +1,21 @@
-import { Link, useNavigate } from "react-router-dom"
-import "../styles/navbar.css";
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import { useSelector } from 'react-redux';
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
-const Navbar = () =>{
+import '../styles/navbar.css';
 
-  const {user,logout}= useContext(AuthContext)
-  const cartItems = useSelector((state =>state.cart.cartItems))
+const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const navigate = useNavigate();
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     logout();
-    navigate('/logout');
+    navigate('/login');
+  };
 
-  }
-    return (
-         <nav className="navbar">
+  return (
+    <nav className="navbar">
       <div className="navbar-brand">
         <Link to="/">
           <img src="/ShopNestLogo.png" alt="ShopNest" style={{ height: '36px', width: '36px', borderRadius: '8px', objectFit: 'cover', filter: 'drop-shadow(0 2px 8px rgba(249, 115, 22, 0.35))' }} />
@@ -36,6 +36,7 @@ const Navbar = () =>{
         )}
       </ul>
     </nav>
-    );
-}
+  );
+};
+
 export default Navbar;

@@ -16,7 +16,7 @@ const Checkout = () => {
 
   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
 
-  const handlePayment = async () => {
+  const handlePayment = async () => {           
     try {
       const orderRes = await fetch('/api/payment/order', {
         method: 'POST',
